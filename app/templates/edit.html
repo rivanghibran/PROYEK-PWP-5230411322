@@ -1,0 +1,51 @@
+<!-- templates/edit.html -->
+{% extends "layout.html" %}
+
+{% block head %}
+<title>Edit User</title>
+{% endblock %}
+
+{% block body %}
+<div class="flex items-center justify-center h-screen">
+    <div class="bg-gray-900 border border-gray-200 p-8 rounded-lg shadow-lg w-full max-w-md">
+        <h2 class="text-2xl font-bold mb-6 text-white text-center">Edit User</h2>
+        <form action="{{ url_for('main.edit_user', user_id=user.id) }}" method="POST">
+            <div class="mb-4">
+                <label for="username" class="block text-white font-semibold mb-2">Username</label>
+                <input type="text" id="username" name="username" value="{{ user.username }}" placeholder="{{ user.username }}" class="text-white w-full px-3 py-2 border bg-gray-800 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+            </div>
+            <div class="mb-4">
+                <label for="email" class="block text-white font-semibold mb-2">Email</label>
+                <input type="email" id="email" name="email" value="{{ user.email }}" placeholder="{{ user.email }}" class="text-white w-full px-3 py-2 border bg-gray-800 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+            </div>
+            <div class="mb-4">
+                <label for="password" class="block text-white font-semibold mb-2">Password (leave blank to keep current password)</label>
+                <input type="password" id="password" name="password" placeholder="New password" class="text-white w-full px-3 py-2 border bg-gray-800 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+            <div class="mb-4">
+                <label for="confirm_password" class="block text-white font-semibold mb-2">Confirm Password</label>
+                <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm new password" class="text-white w-full px-3 py-2 border bg-gray-800 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+            <button type="submit" class="mb-2 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition duration-300">Update</button>
+        </form>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul>
+                {% for category, message in messages %}
+                <div class="container">
+                    <li class="text-center text-white mt-4 p-4 rounded-lg mb-2 
+                    {% if category == 'success' %}
+                    bg-green-700
+                    {% else %}
+                    bg-red-600
+                    {% endif %}
+                    ">{{ message }}</li>
+                </div>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        {% endwith %}
+        <p class="mt-2 text-center text-gray-200">Back to <a href="{{ url_for('main.home') }}" class="text-blue-500 underline">Dashboard</a></p>
+    </div>
+</div>
+{% endblock %}
